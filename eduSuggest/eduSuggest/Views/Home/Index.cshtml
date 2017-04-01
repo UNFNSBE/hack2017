@@ -12,6 +12,8 @@
 </div>
 <br><br>
 
+@* This is to create the second area of the page. With the Search bar for 
+    the keyword*@
 <div class="row">
     <div class="col-md-2">
         <h5> Search by Keyword </h5>
@@ -30,3 +32,41 @@
    
 
 </div>
+
+@*This is the map that will fade over time as the data set changes over the years*@
+<html>
+<head>
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type='text/javascript'>
+    google.charts.load('current', {'packages': ['geochart']});
+    google.charts.setOnLoadCallback(drawMarkersMap);
+
+     function drawMarkersMap() {
+     var data = google.visualization.arrayToDataTable([
+           ['State', 'Foo Factor'],
+           ['US-FL', 200],
+           ['US-CA', 300],
+           ['US-MO', 20],
+           ['US-NY', 150]
+     ]);
+
+     var options = {
+       region: 'US',
+       displayMode: 'regions',
+       colorAxis: {colors: ['#00853f ', 'black', '#e31b23 ']},
+       backgroundColor: '#81d4fa ',
+
+     };
+
+     var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+     chart.draw(data, {width: 900, height: 500, region: "US", resolution: "provinces"})    };
+    </script>
+</head>
+<body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div class="container">
+        <row>
+        </row>
+    </div>
+</body>
+</html>
