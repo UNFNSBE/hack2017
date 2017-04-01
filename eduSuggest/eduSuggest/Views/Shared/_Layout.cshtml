@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - UNF Ospreys</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+   
+   <div class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">UNF Ospreys</a>
@@ -16,30 +17,9 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
             </ul>
-
-
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Find</button>
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Regions<span class="caret"> </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">SOUTH-EAST</a></li>
-                        <li><a href="#">SOUTH-WEST</a></li>
-                        <li><a href="#">WEST</a></li>
-                        <li><a href="#">NORTH-EAST</a></li>
-                    </ul>
-                </li>
-                </form>
-            </ul>
         </div>
 
-    </nav>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
