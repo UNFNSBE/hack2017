@@ -3,11 +3,17 @@
 }
 <div class="container">
     <div class="row">
-        <p class="text-center">
-            <br>
-            This website is to show google trends for any keyword and show
-            how the search has changed overtime.
-        </p>
+        <div class="col-md-12">
+            <h1 class="text-center">Trend Tracker</h1>
+            <p class="text-center">
+                <br />
+                This website is to show what school subjects are trending the most in order to see what
+                subjects students are having the most trouble with or are not being taught effectively.
+                This website will display graphs comparing subjects of the same time over the years from
+                the same subjects. There is also the capabaility to compare different subjects at the same
+                time as well.
+            </p>
+        </div>
     </div>
     <div class="form-group">
         <div class="row">
@@ -35,7 +41,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <h5>Im Ready</h5>
+                    <h5><br></h5>
                     <button id="find" onclick="searchWord()" class="btn btn-default">Find</button>
                 </div>
             </form>
@@ -44,7 +50,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div id="regions_div" class="center-block" style="height:450px"></div>
+            <div id="regions_div" class="center-block" style="height:400px; width:100%"></div>
         </div>
         <br />
     </div>
@@ -67,19 +73,96 @@
         });
     });
     //maps
-    var map = new Datamap({
-        element: document.getElementById('regions_div'),
-        fills: {
-            HIGH: '#afafaf',
-            LOW: '#123456',
-            MEDIUM: 'blue',
-            UNKNOWN: 'rgb(0,0,0)',
-            defaultFill: 'green'
-        },
-        data: {
-            USA: {
-                fillKey: 'MEDIUM',
-                numberOfThings: 10381
+    //var map = new Datamap({
+    //    element: document.getElementById('regions_div'),
+    //    fills: {
+    //        HIGH: '#afafaf',
+    //        LOW: '#123456',
+    //        MEDIUM: 'blue',
+    //        UNKNOWN: 'rgb(0,0,0)',
+    //        defaultFill: 'green'
+    //    },
+    //    data: {
+    //        USA: {
+    //            fillKey: 'MEDIUM',
+    //            numberOfThings: 10381
+    //        }
+    //    }
+    //});
+
+        // example data from server
+        var series = [
+        ["AL",75],["LA",43],["OH",50],
+        ["AK",21],["ME",19],["OK",60],
+        ["AZ",67],["MD",2],["OR",95],
+        ["AR",59],["MA",24],["PA",4],
+        ["CA",14],["MI",47],["RI",15],
+        ["CO",57],["MN",93],["SC",39],
+        ["CT",25],["MS",81],["SD",21],
+        ["DE",15],["MO",52],["TN",19],
+        ["FL",13],["MT",21],["TX",89],
+        ["GA",62],["NE",75],["UT",80],
+        ["HI",91],["NV",51],["VT",22],
+        ["ID",66],["NH",53],["VA",7],
+        ["IL",34],["NJ",33],["WA",45],
+        ["IN",6],["NM",19],["WV",32],
+        ["IA",16],["NY",70],["WI",15],
+        ["KS",93],["NC",36],["WY",77],
+        ["KY",67],["ND",63]];
+
+
+    // Datamaps expect data in format:
+    // {"USA": {"fillColor": "#42a844", numberOfWhatever: 75},
+    //   "FRA": {"fillColor": "#8dc386", numberOfWhatever: 43 } }
+    var dataset = {};
+
+    // We need to colorize every country based on "numberOfWhatever"
+    // colors should be uniq for every value.
+    // For this purpose we create palette(using min/max series-value)
+    var onlyValues = series.map(function(obj){ return obj[1]; });
+    var minValue = Math.min.apply(null, onlyValues),
+            maxValue = Math.max.apply(null, onlyValues);
+
+    // create color palette function
+    // color can be whatever you wish
+    var paletteScale = d3.scale.linear()
+            .domain([minValue,maxValue])
+            .range(["#EFEFFF","#02386F"]); // blue color
+
+    // fill dataset in appropriate format
+    series.forEach(function(item){ //
+        // item example value ["USA", 70]
+        var iso = item[0],
+                value = item[1];
+        dataset[iso] = {numberOfThings: value, fillColor: paletteScale(value) };
+    });
+
+    // render map
+    new Datamap({
+            scope: 'usa',
+            element: document.getElementById('regions_div'),
+        projection: 'mercator', // big world map
+        // countries don't listed in dataset will be painted with this color
+        fills: {defaultFill: '#F5F5F5' },
+        data: dataset,
+        geographyConfig: {
+            borderColor: '#DEDEDE',
+            highlightBorderWidth: 2,
+            // don't change color on mouse hover
+            highlightFillColor: function(geo) {
+                return geo['fillColor'] || '#F5F5F5';
+            },
+            // only change border
+            highlightBorderColor: '#B7B7B7',
+            // show desired information in tooltip
+            popupTemplate: function(geo, data) {
+                // don't show tooltip if country don't present in dataset
+                if (!data) { return ; }
+                // tooltip content
+                return ['<div class="hoverinfo">',
+                    '<strong>', geo.properties.name, '</strong>',
+                    '<br>Count: <strong>', data.numberOfThings, '</strong>',
+                    '</div>'].join('');
             }
         }
     });
