@@ -21,13 +21,16 @@ namespace eduSuggest
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/bootstrap-datetimepicker.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-spacelab.css",
                       "~/Content/site.css",
                       "~/Content/bootstrap-social.css",
-                      "~/Content/font-awesome.css"));
+                      "~/Content/font-awesome.css",
+                      "~/Content/bootstrap-datetimepicker.min.css"));
         }
     }
 }
