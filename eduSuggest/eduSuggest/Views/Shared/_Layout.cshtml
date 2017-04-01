@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - UNF Osprey's Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -16,13 +16,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Educational Analytics", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.DropDownList("google.com", new SelectList(new[]{
+                            new SelectListItem { Text = "Southeast", Value = Url.Action("Contact", "Home") },
+                            new SelectListItem { Text = "Northwest", Value = Url.Action("Contact", "Home") },
+                            new SelectListItem { Text = "North", Value = Url.Action("Contact", "Home") },
+                            }, "Value", "Text"), "Regions",new { id = "urlddl" })
+                    </li>
                 </ul>
             </div>
         </div>
